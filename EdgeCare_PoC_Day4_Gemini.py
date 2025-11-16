@@ -52,14 +52,19 @@ def cloud_send_gemini_http(text):
     return data["candidates"][0]["content"]["parts"][0]["text"]
 
 if __name__ == "__main__":
-    input_text = "大地が大学に入ったんだ。母も喜んでいた。"
-    print("🎙 入力:", input_text)
+    while True:
+        print("送信するテキストを入力してください（終了するには 'exit' と入力）:")
+        input_text = input()
+        if input_text.lower() == 'exit':
+            print("終了します。")
+            break
+        print("🎙 入力:", input_text)
 
-    masked = semantic_mask(input_text)
-    print("🔒 クラウド送信用:", masked)
+        masked = semantic_mask(input_text)
+        print("🔒 クラウド送信用:", masked)
 
-    reply = cloud_send_gemini_http(masked)
-    print("☁️ Gemini応答:", reply)
+        reply = cloud_send_gemini_http(masked)
+        print("☁️ Gemini応答:", reply)
 
-    final_output = recontextualize(reply)
-    print("💬 再文脈化後:", final_output)
+        final_output = recontextualize(reply)
+        print("💬 再文脈化後:", final_output)
